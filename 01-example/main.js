@@ -52,10 +52,6 @@ function statement(invoice, plays) {
 
     result += `${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
       perf.audience
-    }})`;
-
-    result += `${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
-      perf.audience
     }석)\n`;
     totalAmount += amountFor(perf);
   }

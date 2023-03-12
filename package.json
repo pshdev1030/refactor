@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "01": "node ./01-example/main.js"
+    "01": "node ./01-example/main.js",
+    "my01": "node ./01-example/myRefactor.js"
   },
   "author": "",
   "license": "ISC"

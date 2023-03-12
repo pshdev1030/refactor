@@ -48,6 +48,14 @@ function statement(invoice, plays) {
     return result;
   }
 
+  function totalVolumeCredits() {
+    let volumeCredits = 0;
+    for (let perf of invoice.performances) {
+      volumeCredits += volumeCreditsFor(perf);
+    }
+    return volumeCredits;
+  }
+
   for (let perf of invoice.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${
       perf.audience
@@ -55,12 +63,8 @@ function statement(invoice, plays) {
     totalAmount += amountFor(perf);
   }
 
-  let volumeCredits = 0;
-  for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
-  }
   result += `총액: ${usd(totalAmount)}\n`;
-  result += `적립 포인트: ${volumeCredits}점\n`;
+  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
   return result;
 }
 

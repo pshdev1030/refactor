@@ -47,7 +47,6 @@ function statement(invoice, plays) {
 
     totalAmount += thisAmount;
 
-    result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}})`;
     result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}석)\n`;
   }
 

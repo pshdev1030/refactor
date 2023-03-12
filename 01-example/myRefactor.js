@@ -29,6 +29,13 @@ const amountMap = {
   comedy: amountForComedy,
 };
 
+const calculatePoint = (performance, playType) => {
+  let volumeCredit = Math.max(performance.audience - 30, 0);
+  if (playType === "comedy")
+    volumeCredit += Math.floor(performance.audience / 5);
+  return volumeCredit;
+};
+
 function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
@@ -37,14 +44,12 @@ function statement(invoice, plays) {
   for (let perf of invoice.performances) {
     const play = plays[perf.playId];
     const thisAmount = amountMap?.[play.type](perf);
-    // 포인트를 적립한다.
-    volumeCredits += Math.max(perf.audience - 30, 0);
-    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
-    result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}})`;
-
-    // 청구 내역을 출력한다
-    result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}석)\n`;
+    const thisPoint = calculatePoint(perf, play.type);
+    volumeCredits += thisPoint;
     totalAmount += thisAmount;
+
+    result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}})`;
+    result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}석)\n`;
   }
   result += `총액: ${toUSD(totalAmount / 100)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;

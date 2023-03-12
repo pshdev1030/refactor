@@ -44,12 +44,17 @@ function statement(invoice, plays) {
   for (let perf of invoice.performances) {
     const play = plays[perf.playId];
     const thisAmount = amountMap?.[play.type](perf);
-    const thisPoint = calculatePoint(perf, play.type);
-    volumeCredits += thisPoint;
+
     totalAmount += thisAmount;
 
     result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}})`;
     result += `${play.name}: ${toUSD(thisAmount / 100)} (${perf.audience}석)\n`;
+  }
+
+  for (let perf of invoice.performances) {
+    const play = plays[perf.playId];
+    const thisPoint = calculatePoint(perf, play.type);
+    volumeCredits += thisPoint;
   }
   result += `총액: ${toUSD(totalAmount / 100)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;

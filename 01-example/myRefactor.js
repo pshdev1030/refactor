@@ -8,6 +8,27 @@ const toUSD = (number) =>
     minimumFractionDigits: 2,
   }).format(number);
 
+const amountForTragedy = (performance) => {
+  let amount = 40000;
+  if (performance.audience > 30) {
+    amount += 1000 * (performance.audience - 30);
+  }
+  return amount;
+};
+
+const amountForComedy = (performance) => {
+  let amount = 30000;
+  if (performance.audience > 20) {
+    amount += 10000 + 500 * (performance.audience - 20);
+  }
+  return amount;
+};
+
+const amountMap = {
+  tragedy: amountForTragedy,
+  comedy: amountForComedy,
+};
+
 function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
@@ -15,26 +36,7 @@ function statement(invoice, plays) {
 
   for (let perf of invoice.performances) {
     const play = plays[perf.playId];
-    let thisAmount = 0;
-    switch (play.type) {
-      case "tragedy":
-        thisAmount = 4000;
-        if (perf.audience > 30) {
-          thisAmount += 1000 * (perf.audience - 30);
-        }
-        break;
-      case "comedy": {
-        thisAmount = 30000;
-        if (perf.audience > 20) {
-          thisAmount += 10000 + 500 * (perf.audience - 20);
-        }
-        thisAmount += 300 * perf.audience;
-        break;
-      }
-      default: {
-        throw new Error(`알 수 없는 장르 : ${play.type}`);
-      }
-    }
+    const thisAmount = amountMap?.[play.type](perf);
     // 포인트를 적립한다.
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);

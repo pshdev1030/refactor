@@ -16,7 +16,7 @@ function statement(invoice, plays) {
     let thisAmount = 0;
     switch (play.type) {
       case "tragedy":
-        thisAmount = 4000;
+        thisAmount = 40000;
         if (perf.audience > 30) {
           thisAmount += 1000 * (perf.audience - 30);
         }

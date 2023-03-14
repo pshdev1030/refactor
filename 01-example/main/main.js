@@ -1,5 +1,5 @@
-const plays = require("./plays.json");
-const invoices = require("./invoices.json");
+const plays = require("../plays.json");
+const invoices = require("../invoices.json");
 const createStatementData = require("./createStatementData.js");
 
 function statement(invoice, plays) {

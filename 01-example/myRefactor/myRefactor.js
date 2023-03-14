@@ -1,5 +1,5 @@
-const plays = require("./plays.json");
-const invoices = require("./invoices.json");
+const plays = require("../plays.json");
+const invoices = require("../invoices.json");
 
 const toUSD = (number) =>
   new Intl.NumberFormat("en-us", {
